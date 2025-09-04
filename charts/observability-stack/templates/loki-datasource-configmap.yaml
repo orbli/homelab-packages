@@ -8,7 +8,10 @@ metadata:
     grafana_datasource: "1"
     app: kube-prometheus-stack-grafana
     release: {{ .Release.Name }}
-    {{- include "observability-stack.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
   loki-datasource.yaml: |-
     apiVersion: 1
