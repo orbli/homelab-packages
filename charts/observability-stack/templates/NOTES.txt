@@ -1,0 +1,50 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }} in namespace {{ .Release.Namespace }}.
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get all {{ .Release.Name }}
+
+{{- if .Values.kubePrometheusStack.enabled }}
+
+## Prometheus Stack Components
+
+### Prometheus
+- Internal URL: http://{{ .Values.kubePrometheusStack.fullnameOverride }}-kube-prometheus-prometheus.{{ .Release.Namespace }}.svc.{{ .Values.global.clusterDomain }}:9090
+- Retention: {{ .Values.kubePrometheusStack.prometheus.prometheusSpec.retention }}
+- Storage: {{ .Values.kubePrometheusStack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage }}
+
+### Grafana
+- Internal URL: http://{{ .Values.kubePrometheusStack.fullnameOverride }}-grafana.{{ .Release.Namespace }}.svc.{{ .Values.global.clusterDomain }}
+- Default admin password: {{ .Values.kubePrometheusStack.grafana.adminPassword }}
+  
+  ⚠️  Please change the admin password after first login!
+
+### AlertManager
+- Internal URL: http://{{ .Values.kubePrometheusStack.fullnameOverride }}-kube-prometheus-alertmanager.{{ .Release.Namespace }}.svc.{{ .Values.global.clusterDomain }}:9093
+- Storage: {{ .Values.kubePrometheusStack.alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.resources.requests.storage }}
+
+## Quick Verification
+
+Check if all pods are running:
+  kubectl get pods -n {{ .Release.Namespace }}
+
+Access Grafana (port-forward):
+  kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Values.kubePrometheusStack.fullnameOverride }}-grafana 3000:80
+
+Access Prometheus (port-forward):
+  kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Values.kubePrometheusStack.fullnameOverride }}-kube-prometheus-prometheus 9090:9090
+
+{{- end }}
+
+## Next Steps
+
+1. Configure OAuth authentication for Grafana
+2. Add Loki for log aggregation
+3. Add Tempo for distributed tracing
+4. Configure Alloy for log collection
+5. Set up custom dashboards and alerts
+
+For more information, visit: https://github.com/eli/homelab-helm

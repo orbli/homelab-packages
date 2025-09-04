@@ -1,0 +1,25 @@
+name: Release Rust Crates
+
+on:
+  push:
+    tags:
+      - 'rust-*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      
+      - name: Get crate name from tag
+        id: tag
+        run: |
+          echo "crate=${GITHUB_REF#refs/tags/rust-}" >> $GITHUB_OUTPUT
+      
+      - name: Publish to crates.io
+        run: |
+          cd rust/${{ steps.tag.outputs.crate }}
+          cargo publish --token ${{ secrets.CARGO_TOKEN }}
