@@ -49,7 +49,7 @@ Access Prometheus (port-forward):
 
 ## Loki (Log Aggregation)
 
-- Internal URL: http://{{ .Release.Name }}-loki-gateway.{{ .Release.Namespace }}.svc.cluster.local
+- Internal URL: http://{{ .Release.Name }}-loki.{{ .Release.Namespace }}.svc.cluster.local:3100
 - Storage: {{ .Values.loki.singleBinary.persistence.size }}
 - Retention: {{ .Values.loki.loki.limits_config.retention_period }}
 - Configured in Grafana: Yes (datasource auto-configured)

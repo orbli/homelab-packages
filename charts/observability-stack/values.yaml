@@ -74,7 +74,7 @@ kubePrometheusStack:
             timeInterval: "30s"
         - name: Loki
           type: loki
-          url: http://observability-stack-loki-gateway
+          url: http://observability-stack-loki:3100
           access: proxy
           isDefault: false
           jsonData:
@@ -188,10 +188,10 @@ loki:
         cpu: 1
         memory: 1Gi
   
-  # Gateway configuration (nginx)
+  # Gateway configuration (nginx) - disabled due to DNS issues
   gateway:
-    enabled: true
-    replicas: 1
+    enabled: false
+    replicas: 0
   
   # Disable other deployment modes
   read:
