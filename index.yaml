@@ -3,7 +3,79 @@ entries:
   observability-stack:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:52.294654527Z"
+    created: "2025-09-04T12:35:42.890519605Z"
+    dependencies:
+    - condition: kubePrometheusStack.enabled
+      name: kube-prometheus-stack
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 69.2.0
+    - condition: loki.enabled
+      name: loki
+      repository: https://grafana.github.io/helm-charts
+      version: 6.24.0
+    description: Complete observability stack for Kubernetes with Prometheus, Grafana,
+      Loki, Tempo, and Alloy
+    digest: 1938f6436787013b272a6622cc30c6d7854d31918dac8f07ed079ad735f6cbaf
+    home: https://github.com/orbli/homelab-packages
+    keywords:
+    - monitoring
+    - observability
+    - prometheus
+    - grafana
+    - loki
+    - tempo
+    - metrics
+    - logs
+    - traces
+    maintainers:
+    - email: mail@orbb.li
+      name: Orb Li
+    name: observability-stack
+    sources:
+    - https://github.com/orbli/homelab-packages
+    type: application
+    urls:
+    - https://orbli.github.io/homelab-packages/observability-stack-0.3.4.tgz
+    version: 0.3.4
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-09-04T12:35:43.21274762Z"
+    dependencies:
+    - condition: kubePrometheusStack.enabled
+      name: kube-prometheus-stack
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 69.2.0
+    - condition: loki.enabled
+      name: loki
+      repository: https://grafana.github.io/helm-charts
+      version: 6.24.0
+    description: Complete observability stack for Kubernetes with Prometheus, Grafana,
+      Loki, Tempo, and Alloy
+    digest: 1938f6436787013b272a6622cc30c6d7854d31918dac8f07ed079ad735f6cbaf
+    home: https://github.com/orbli/homelab-packages
+    keywords:
+    - monitoring
+    - observability
+    - prometheus
+    - grafana
+    - loki
+    - tempo
+    - metrics
+    - logs
+    - traces
+    maintainers:
+    - email: mail@orbb.li
+      name: Orb Li
+    name: observability-stack
+    sources:
+    - https://github.com/orbli/homelab-packages
+    type: application
+    urls:
+    - https://orbli.github.io/homelab-packages/.deploy/observability-stack-0.3.4.tgz
+    version: 0.3.4
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-09-04T12:35:43.16833523Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -39,7 +111,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:51.975279889Z"
+    created: "2025-09-04T12:35:42.844786237Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -75,7 +147,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:52.249292181Z"
+    created: "2025-09-04T12:35:43.124821426Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -111,7 +183,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:51.926341904Z"
+    created: "2025-09-04T12:35:42.799691912Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -147,7 +219,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:52.193285035Z"
+    created: "2025-09-04T12:35:43.080662211Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -183,7 +255,7 @@ entries:
     version: 0.3.1
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:51.880284539Z"
+    created: "2025-09-04T12:35:42.753247547Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -219,43 +291,7 @@ entries:
     version: 0.3.1
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:52.125264798Z"
-    dependencies:
-    - condition: kubePrometheusStack.enabled
-      name: kube-prometheus-stack
-      repository: https://prometheus-community.github.io/helm-charts
-      version: 69.2.0
-    - condition: loki.enabled
-      name: loki
-      repository: https://grafana.github.io/helm-charts
-      version: 6.24.0
-    description: Complete observability stack for Kubernetes with Prometheus, Grafana,
-      Loki, Tempo, and Alloy
-    digest: c22f2129e9badbf454a60371a3b75167712182d41d5ead81446f19285427fea6
-    home: https://github.com/orbli/homelab-packages
-    keywords:
-    - monitoring
-    - observability
-    - prometheus
-    - grafana
-    - loki
-    - tempo
-    - metrics
-    - logs
-    - traces
-    maintainers:
-    - email: mail@orbb.li
-      name: Orb Li
-    name: observability-stack
-    sources:
-    - https://github.com/orbli/homelab-packages
-    type: application
-    urls:
-    - https://orbli.github.io/homelab-packages/.deploy/observability-stack-0.3.0.tgz
-    version: 0.3.0
-  - apiVersion: v2
-    appVersion: 1.0.0
-    created: "2025-09-04T11:36:51.823861468Z"
+    created: "2025-09-04T12:35:42.709746104Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -291,15 +327,19 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:51.760510664Z"
+    created: "2025-09-04T12:35:43.032083667Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
       repository: https://prometheus-community.github.io/helm-charts
       version: 69.2.0
+    - condition: loki.enabled
+      name: loki
+      repository: https://grafana.github.io/helm-charts
+      version: 6.24.0
     description: Complete observability stack for Kubernetes with Prometheus, Grafana,
       Loki, Tempo, and Alloy
-    digest: 0aafdf04911c7490ef4b430cbe800a80ca9fee8594ad511d78fa230fbfa8757f
+    digest: c22f2129e9badbf454a60371a3b75167712182d41d5ead81446f19285427fea6
     home: https://github.com/orbli/homelab-packages
     keywords:
     - monitoring
@@ -319,11 +359,11 @@ entries:
     - https://github.com/orbli/homelab-packages
     type: application
     urls:
-    - https://orbli.github.io/homelab-packages/observability-stack-0.2.0.tgz
-    version: 0.2.0
+    - https://orbli.github.io/homelab-packages/.deploy/observability-stack-0.3.0.tgz
+    version: 0.3.0
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:52.068655809Z"
+    created: "2025-09-04T12:35:42.984571302Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -355,7 +395,39 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:52.037162065Z"
+    created: "2025-09-04T12:35:42.653753804Z"
+    dependencies:
+    - condition: kubePrometheusStack.enabled
+      name: kube-prometheus-stack
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 69.2.0
+    description: Complete observability stack for Kubernetes with Prometheus, Grafana,
+      Loki, Tempo, and Alloy
+    digest: 0aafdf04911c7490ef4b430cbe800a80ca9fee8594ad511d78fa230fbfa8757f
+    home: https://github.com/orbli/homelab-packages
+    keywords:
+    - monitoring
+    - observability
+    - prometheus
+    - grafana
+    - loki
+    - tempo
+    - metrics
+    - logs
+    - traces
+    maintainers:
+    - email: mail@orbb.li
+      name: Orb Li
+    name: observability-stack
+    sources:
+    - https://github.com/orbli/homelab-packages
+    type: application
+    urls:
+    - https://orbli.github.io/homelab-packages/observability-stack-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-09-04T12:35:42.952634122Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -387,7 +459,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:51.725781253Z"
+    created: "2025-09-04T12:35:42.6224243Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -419,7 +491,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:52.006845358Z"
+    created: "2025-09-04T12:35:42.921710985Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -451,7 +523,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:51.695361273Z"
+    created: "2025-09-04T12:35:42.590338123Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -483,7 +555,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T11:36:51.666057856Z"
+    created: "2025-09-04T12:35:42.561559992Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -513,4 +585,4 @@ entries:
     urls:
     - https://orbli.github.io/homelab-packages/observability-stack-0.1.2.tgz
     version: 0.1.2
-generated: "2025-09-04T11:36:51.629130273Z"
+generated: "2025-09-04T12:35:42.532592444Z"
