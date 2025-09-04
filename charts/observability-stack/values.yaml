@@ -191,6 +191,14 @@ loki:
   gateway:
     enabled: true
     replicas: 1
+  
+  # Disable other deployment modes
+  read:
+    replicas: 0
+  write:
+    replicas: 0
+  backend:
+    replicas: 0
     
   # Monitoring
   monitoring:
