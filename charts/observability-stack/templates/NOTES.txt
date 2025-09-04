@@ -12,18 +12,18 @@ To learn more about the release, try:
 ## Prometheus Stack Components
 
 ### Prometheus
-- Internal URL: http://{{ .Values.kubePrometheusStack.fullnameOverride }}-kube-prometheus-prometheus.{{ .Release.Namespace }}.svc.{{ .Values.global.clusterDomain }}:9090
+- Internal URL: http://{{ .Release.Name }}-kube-p-prometheus.{{ .Release.Namespace }}.svc.cluster.local:9090
 - Retention: {{ .Values.kubePrometheusStack.prometheus.prometheusSpec.retention }}
 - Storage: {{ .Values.kubePrometheusStack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage }}
 
 ### Grafana
-- Internal URL: http://{{ .Values.kubePrometheusStack.fullnameOverride }}-grafana.{{ .Release.Namespace }}.svc.{{ .Values.global.clusterDomain }}
+- Internal URL: http://{{ .Release.Name }}-grafana.{{ .Release.Namespace }}.svc.cluster.local
 - Default admin password: {{ .Values.kubePrometheusStack.grafana.adminPassword }}
   
   ⚠️  Please change the admin password after first login!
 
 ### AlertManager
-- Internal URL: http://{{ .Values.kubePrometheusStack.fullnameOverride }}-kube-prometheus-alertmanager.{{ .Release.Namespace }}.svc.{{ .Values.global.clusterDomain }}:9093
+- Internal URL: http://{{ .Release.Name }}-kube-p-alertmanager.{{ .Release.Namespace }}.svc.cluster.local:9093
 - Storage: {{ .Values.kubePrometheusStack.alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.resources.requests.storage }}
 
 ## Quick Verification
@@ -32,10 +32,10 @@ Check if all pods are running:
   kubectl get pods -n {{ .Release.Namespace }}
 
 Access Grafana (port-forward):
-  kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Values.kubePrometheusStack.fullnameOverride }}-grafana 3000:80
+  kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Release.Name }}-grafana 3000:80
 
 Access Prometheus (port-forward):
-  kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Values.kubePrometheusStack.fullnameOverride }}-kube-prometheus-prometheus 9090:9090
+  kubectl port-forward -n {{ .Release.Namespace }} svc/{{ .Release.Name }}-kube-p-prometheus 9090:9090
 
 {{- end }}
 
@@ -47,4 +47,4 @@ Access Prometheus (port-forward):
 4. Configure Alloy for log collection
 5. Set up custom dashboards and alerts
 
-For more information, visit: https://github.com/eli/homelab-helm
+For more information, visit: https://github.com/orbli/homelab-packages
