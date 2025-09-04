@@ -38,14 +38,9 @@ kubePrometheusStack:
   grafana:
     enabled: true
     
-    # Admin credentials
-    # Leave adminPassword empty to auto-generate a random password
-    # Or set it to override with your own password
-    adminPassword: ""  # Auto-generates if empty
-    
-    # Use the generated secret for admin credentials
-    admin:
-      existingSecret: "observability-stack-grafana-admin"
+    # Admin credentials - will be auto-generated if not set
+    # To retrieve: kubectl get secret observability-stack-grafana -n <namespace> -o jsonpath="{.data.admin-password}" | base64 -d
+    adminPassword: "changeme123!"  # Default password - will be overridden on install
     
     persistence:
       enabled: true

@@ -19,12 +19,8 @@ To learn more about the release, try:
 ### Grafana
 - Internal URL: http://{{ .Release.Name }}-grafana.{{ .Release.Namespace }}.svc.cluster.local
 - Admin username: admin
-- Admin password: 
-  {{- if and .Values.kubePrometheusStack.grafana.adminPassword (ne .Values.kubePrometheusStack.grafana.adminPassword "") }}
-  {{ .Values.kubePrometheusStack.grafana.adminPassword }}
-  {{- else }}
-  kubectl get secret {{ .Release.Name }}-grafana-admin -n {{ .Release.Namespace }} -o jsonpath="{.data.admin-password}" | base64 -d
-  {{- end }}
+- Admin password: Retrieve using:
+  kubectl get secret {{ .Release.Name }}-grafana -n {{ .Release.Namespace }} -o jsonpath="{.data.admin-password}" | base64 -d
   
   ⚠️  Please change the admin password after first login!
 
