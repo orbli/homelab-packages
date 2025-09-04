@@ -39,10 +39,10 @@ kubePrometheusStack:
     enabled: true
     
     # Admin credentials
-    # IMPORTANT: This must be set to a specific value. The kube-prometheus-stack 
-    # creates the secret on first install and doesn't update it afterward.
-    # Default: "admin123!" (please change after first login)
-    adminPassword: "admin123!"
+    # IMPORTANT: The kube-prometheus-stack creates this secret on first install only
+    # To retrieve current password: kubectl get secret <release>-grafana -n <namespace> -o jsonpath="{.data.admin-password}" | base64 -d
+    # Default: "prom-operator" (kube-prometheus-stack default)
+    adminPassword: "prom-operator"
     
     persistence:
       enabled: true
@@ -58,15 +58,7 @@ kubePrometheusStack:
         check_for_updates: false
         reporting_enabled: false
     
-    # Additional datasources beyond the default Prometheus and Alertmanager
-    additionalDataSources:
-      - name: Loki
-        type: loki
-        url: http://observability-stack-loki:3100
-        access: proxy
-        isDefault: false
-        jsonData:
-          maxLines: 5000
+    # Note: Loki datasource is automatically configured via a separate ConfigMap template
   
   # AlertManager configuration with WORKING storage
   alertmanager:

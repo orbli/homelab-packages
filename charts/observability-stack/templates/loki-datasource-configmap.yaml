@@ -1,0 +1,24 @@
+{{- if and .Values.kubePrometheusStack.enabled .Values.loki.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-loki-datasource
+  namespace: {{ .Release.Namespace }}
+  labels:
+    grafana_datasource: "1"
+    app: kube-prometheus-stack-grafana
+    release: {{ .Release.Name }}
+    {{- include "observability-stack.labels" . | nindent 4 }}
+data:
+  loki-datasource.yaml: |-
+    apiVersion: 1
+    datasources:
+    - name: "Loki"
+      type: loki
+      uid: loki
+      url: http://{{ .Release.Name }}-loki:3100/
+      access: proxy
+      isDefault: false
+      jsonData:
+        maxLines: 5000
+{{- end -}}
