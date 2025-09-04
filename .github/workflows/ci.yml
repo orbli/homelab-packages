@@ -20,6 +20,7 @@ jobs:
         uses: azure/setup-helm@v3
         with:
           version: 'latest'
+          token: ${{ github.token }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
