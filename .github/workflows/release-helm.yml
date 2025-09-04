@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ github.token }}
 
       - name: Configure Git
         run: |
@@ -93,5 +93,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Update Helm repository with charts from ${{ github.sha }}"
-            git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages
+            git push "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" gh-pages
           fi
