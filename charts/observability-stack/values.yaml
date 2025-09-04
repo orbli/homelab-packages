@@ -189,3 +189,15 @@ loki:
   # Test configuration
   test:
     enabled: false
+  
+  # Disable Loki Canary - it's a testing tool that continuously writes/reads logs
+  # to verify Loki is working. Not needed for production use.
+  lokiCanary:
+    enabled: false
+  
+  # Disable caches to save resources (optional - improves performance if enabled)
+  # Enable these if you have enough resources and want better query performance
+  chunksCache:
+    enabled: false  # Caches compressed log chunks
+  resultsCache:
+    enabled: false  # Caches query results
