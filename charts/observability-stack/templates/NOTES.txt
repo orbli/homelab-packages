@@ -45,12 +45,29 @@ Access Prometheus (port-forward):
 
 {{- end }}
 
+{{- if .Values.loki.enabled }}
+
+## Loki (Log Aggregation)
+
+- Internal URL: http://{{ .Release.Name }}-loki-gateway.{{ .Release.Namespace }}.svc.cluster.local
+- Storage: {{ .Values.loki.singleBinary.persistence.size }}
+- Retention: {{ .Values.loki.loki.limits_config.retention_period }}
+- Configured in Grafana: Yes (datasource auto-configured)
+
+Access Loki via Grafana:
+  1. Open Grafana UI
+  2. Go to Explore
+  3. Select "Loki" datasource
+  4. Query logs with LogQL
+
+{{- end }}
+
 ## Next Steps
 
 1. Configure OAuth authentication for Grafana
-2. Add Loki for log aggregation
+2. Deploy log collectors (Alloy/Promtail) to ship logs to Loki
 3. Add Tempo for distributed tracing
-4. Configure Alloy for log collection
-5. Set up custom dashboards and alerts
+4. Set up custom dashboards and alerts
+5. Configure retention policies
 
 For more information, visit: https://github.com/orbli/homelab-packages
