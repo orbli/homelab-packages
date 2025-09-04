@@ -3,7 +3,7 @@ entries:
   observability-stack:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T06:39:29.715312113Z"
+    created: "2025-09-04T07:11:01.023959452Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -35,7 +35,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-04T06:39:29.744908716Z"
+    created: "2025-09-04T07:11:01.053109655Z"
     dependencies:
     - condition: kubePrometheusStack.enabled
       name: kube-prometheus-stack
@@ -65,4 +65,4 @@ entries:
     urls:
     - https://orbli.github.io/homelab-packages/.deploy/observability-stack-0.1.2.tgz
     version: 0.1.2
-generated: "2025-09-04T06:39:29.685704098Z"
+generated: "2025-09-04T07:11:00.989652235Z"
