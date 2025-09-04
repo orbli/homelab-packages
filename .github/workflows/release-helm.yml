@@ -21,7 +21,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ github.token }}
 
       - name: Configure Git
         run: |
@@ -31,7 +30,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v3
         with:
-          version: 'latest'
+          version: 'v3.13.0'
           token: ${{ github.token }}
 
       - name: Add helm repositories
@@ -57,42 +56,53 @@ jobs:
               helm package "$chart" -d .deploy
             fi
           done
+          ls -la .deploy/
 
       - name: Checkout gh-pages branch
         run: |
-          git fetch origin gh-pages:gh-pages || true
-          if git show-ref --verify --quiet refs/heads/gh-pages; then
-            echo "gh-pages branch exists"
-            git worktree add gh-pages-deploy gh-pages
+          git fetch origin gh-pages:refs/remotes/origin/gh-pages || echo "No gh-pages branch yet"
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            echo "gh-pages branch exists remotely"
+            git checkout --track origin/gh-pages
           else
-            echo "Creating gh-pages branch"
-            git worktree add --detach gh-pages-deploy
-            cd gh-pages-deploy
+            echo "Creating new gh-pages branch"
             git checkout --orphan gh-pages
-            git rm -rf . || true
-            touch index.yaml
-            echo "# Homelab Packages Helm Repository" > README.md
-            git add .
-            git commit -m "Initialize gh-pages branch"
-            cd ..
+            git reset --hard
+            git commit --allow-empty -m "Initialize gh-pages branch"
           fi
 
       - name: Update Helm repository index
         run: |
-          if [ -f "gh-pages-deploy/index.yaml" ]; then
-            helm repo index .deploy --url https://${{ github.repository_owner }}.github.io/homelab-packages --merge gh-pages-deploy/index.yaml
-          else
-            helm repo index .deploy --url https://${{ github.repository_owner }}.github.io/homelab-packages
-          fi
-          cp .deploy/* gh-pages-deploy/ || true
+          # Copy packaged charts to current directory
+          cp .deploy/*.tgz . 2>/dev/null || true
           
-      - name: Push to gh-pages
-        working-directory: ./gh-pages-deploy
+          # Generate or update the index
+          if [ -f "index.yaml" ]; then
+            echo "Updating existing index.yaml"
+            helm repo index . --url https://orbli.github.io/homelab-packages --merge index.yaml
+          else
+            echo "Creating new index.yaml"
+            helm repo index . --url https://orbli.github.io/homelab-packages
+          fi
+          
+          # Create a simple README if it doesn't exist
+          if [ ! -f "README.md" ]; then
+            echo "# Homelab Packages Helm Repository" > README.md
+            echo "" >> README.md
+            echo "## Usage" >> README.md
+            echo '```bash' >> README.md
+            echo "helm repo add homelab-packages https://orbli.github.io/homelab-packages" >> README.md
+            echo "helm repo update" >> README.md
+            echo "helm search repo homelab-packages" >> README.md
+            echo '```' >> README.md
+          fi
+          
+      - name: Commit and push to gh-pages
         run: |
-          git add .
+          git add -A
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
             git commit -m "Update Helm repository with charts from ${{ github.sha }}"
-            git push "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" gh-pages
+            git push origin gh-pages
           fi
