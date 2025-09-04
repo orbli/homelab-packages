@@ -1,0 +1,173 @@
+# Default values for observability-stack
+# This is a YAML-formatted file.
+
+# Namespace configuration
+namespace: observability
+
+# Global configuration that can be used by all sub-charts
+global:
+  clusterDomain: home-hk1-cluster.orbb.li
+  storageClass: k8s-csi
+
+# kube-prometheus-stack configuration
+kubePrometheusStack:
+  enabled: true
+  
+  # Override the release name to maintain consistency
+  fullnameOverride: "prometheus"
+  
+  # Prometheus configuration
+  prometheus:
+    prometheusSpec:
+      retention: 30d
+      retentionSize: "50GB"
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: k8s-csi
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 100Gi
+      resources:
+        requests:
+          memory: 2Gi
+          cpu: 500m
+        limits:
+          memory: 4Gi
+          cpu: 2
+      
+      # Service monitor selectors
+      serviceMonitorSelectorNilUsesHelmValues: false
+      podMonitorSelectorNilUsesHelmValues: false
+      ruleSelectorNilUsesHelmValues: false
+      
+      # Enable remote write for future integrations
+      remoteWrite: []
+      
+  # Grafana configuration (basic, no OAuth yet)
+  grafana:
+    enabled: true
+    
+    # Admin credentials (will be replaced with OAuth later)
+    adminPassword: "changeme"  # Change this!
+    
+    # Persistence
+    persistence:
+      enabled: true
+      type: pvc
+      storageClassName: k8s-csi
+      size: 10Gi
+    
+    # Basic configuration
+    grafana.ini:
+      server:
+        domain: grafana.observability.svc.home-hk1-cluster.orbb.li
+        root_url: "%(protocol)s://%(domain)s/"
+      
+      analytics:
+        check_for_updates: false
+        reporting_enabled: false
+      
+      log:
+        level: info
+        mode: console
+    
+    # Default datasources
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://prometheus-kube-prometheus-prometheus:9090
+          access: proxy
+          isDefault: true
+          jsonData:
+            timeInterval: "30s"
+    
+    # Pre-installed plugins
+    plugins:
+      - grafana-piechart-panel
+      - grafana-worldmap-panel
+    
+    # Resources
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+    
+    # Service configuration
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: 3000
+  
+  # AlertManager configuration
+  alertmanager:
+    enabled: true
+    alertmanagerSpec:
+      storage:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: k8s-csi
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 10Gi
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  
+  # Node exporter
+  nodeExporter:
+    enabled: true
+  
+  # Kube state metrics
+  kubeStateMetrics:
+    enabled: true
+  
+  # Prometheus operator
+  prometheusOperator:
+    enabled: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+  
+  # Disable components we'll add separately later
+  # These will be managed as separate sub-charts for better control
+  kubeEtcd:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+  kubeControllerManager:
+    enabled: false
+
+# Future components (not yet enabled)
+# These will be added as separate dependencies
+
+# Loki for log aggregation
+loki:
+  enabled: false
+  # Configuration will be added later
+
+# Tempo for distributed tracing  
+tempo:
+  enabled: false
+  # Configuration will be added later
+
+# Alloy for log collection
+alloy:
+  enabled: false
+  # Configuration will be added later
